@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash, jsonify
 import requests
 from datetime import datetime
+from app import app
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a secure key in production
