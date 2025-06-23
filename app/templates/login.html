@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <style>
+    body {
+        background-image: url("{{ url_for('static', filename='styles/empty-conference-room.jpg') }}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        
+    }
+</style>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+    <header>
+    <div class="navbar">
+        <img src="{{ url_for('static', filename='styles/mzanstilogo.jpeg') }}" alt="Logo" class="logo">
+        <nav>
+            <a href="{{ url_for('dashboard') }}"></a>
+            <a href="{{ url_for('dashboard') }}"></a>
+            <a href="{{ url_for('dashboard') }}"></a>
+            <a href="{{ url_for('dashboard') }}"></a>
+            <a href="{{ url_for('login') }}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+    <h2>Boardroom Booking</h2>
+    <form id="loginForm" method="post" action="/login">
+    <input type="email" id="email" name="email" placeholder="Email" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+    </form>
+
+<a href="{{ url_for('register') }}">Don't have an account?</a>
+</body>
+</html>
