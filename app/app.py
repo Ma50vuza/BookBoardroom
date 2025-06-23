@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash, jsonify
 import requests
 from datetime import datetime
-from app import app
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a secure key in production
@@ -149,10 +148,9 @@ def dashboard():
     # Fetch available rooms
     rooms_response = requests.get(f"{API_URL}/api/rooms", headers=headers)
     rooms = rooms_response.json() if rooms_response.status_code == 200 else []
-    print(rooms)
     for room in rooms: 
         room_id = room.get('room_id')
-    print(room_id)
+    
 
     # Handle booking form submission
     if request.method == 'POST':
@@ -195,5 +193,5 @@ def viewBookings():
 
     return render_template('viewBookings.html', bookings=bookings)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+ #   app.run(debug=True)
