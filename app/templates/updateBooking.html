@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+        .update-booking-container {
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 32px 24px;
+        }
+        .update-booking-container h2 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .booking-form label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 4px;
+        }
+        .booking-form input, .booking-form select {
+            width: 100%;
+            padding: 7px;
+            border-radius: 4px;
+            border: none;
+            margin-bottom: 10px;
+        }
+        .booking-form input[type="submit"] {
+            background: #2980b9;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .booking-form input[type="submit"]:hover {
+            background: #1c5980;
+        }
+        .back-link {
+            display: block;
+            margin-top: 18px;
+            text-align: center;
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="update-booking-container">
+        <h2>Update Booking</h2>
+        <form class="booking-form" method="POST">
+            <label for="room_id">Room:</label>
+            <select name="room_id" required>
+                {% for room in rooms %}
+                    <option value="{{ room['room_id'] }}" {% if room['room_id'] == booking['room_id'] %}selected{% endif %}>{{ room['name'] }}</option>
+                {% endfor %}
+            </select>
+            <label for="start_time">Start Time:</label>
+            <input type="datetime-local" name="start_time" value="{{ booking['start_time']|replace(' ', 'T') }}" required>
+            <label for="end_time">End Time:</label>
+            <input type="datetime-local" name="end_time" value="{{ booking['end_time']|replace(' ', 'T') }}" required>
+            <label for="purpose">Purpose:</label>
+            <input type="text" name="purpose" value="{{ booking['purpose'] }}" required>
+            <label for="attendees">Attendees (comma-separated emails):</label>
+            <input type="text" name="attendees" value="{{ booking['attendees']|join(', ') if booking['attendees'] else '' }}">
+            <input type="submit" value="Update Booking">
+        </form>
+        <a href="{{ url_for('myBookings') }}" class="back-link">Back to My Bookings</a>
+    </div>
+</body>
+</html>

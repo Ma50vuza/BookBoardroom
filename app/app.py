@@ -193,5 +193,81 @@ def viewBookings():
 
     return render_template('viewBookings.html', bookings=bookings)
 
+@app.route('/deleteBooking/<booking_id>', methods=['POST'])
+def deleteBooking(booking_id):
+    token = session.get('token')
+    if not token:
+        flash('Please log in first.')
+        return redirect(url_for('login'))
+
+    headers = {'Authorization': f'Bearer {token}'}
+    response = requests.delete(f"{API_URL}/api/bookings/{booking_id}", headers=headers)
+    if response.status_code == 200:
+        flash('Booking cancelled successfully.')
+    else:
+        flash('Failed to cancel booking.')
+    return redirect(url_for('view_bookings'))
+
+@app.route('/myBookings', methods=['GET'])
+def myBookings():
+    token = session.get('token')
+    user_email = session.get('email')
+    if not token or not user_email:
+        flash('Please log in first.')
+        return redirect(url_for('login'))
+
+    headers = {'Authorization': f'Bearer {token}'}
+    bookings_response = requests.get(f"{API_URL}/api/bookings", headers=headers)
+    all_bookings = bookings_response.json() if bookings_response.status_code == 200 else []
+
+    # Filter bookings for the logged-in user
+    user_bookings = [b for b in all_bookings if b.get('email') == user_email]
+
+    return render_template('myBookings.html', bookings=user_bookings)
+
+@app.route('/update_booking/<booking_id>', methods=['GET', 'POST'])
+def update_booking(booking_id):
+    token = session.get('token')
+    if not token:
+        flash('Please log in first.')
+        return redirect(url_for('login'))
+
+    headers = {'Authorization': f'Bearer {token}'}
+
+    # Fetch the booking details
+    booking_response = requests.get(f"{API_URL}/api/bookings/{booking_id}", headers=headers)
+    if booking_response.status_code != 200:
+        flash('Booking not found.')
+        return redirect(url_for('my_bookings'))
+    booking = booking_response.json()
+
+    # Fetch available rooms for dropdown
+    rooms_response = requests.get(f"{API_URL}/api/rooms", headers=headers)
+    rooms = rooms_response.json() if rooms_response.status_code == 200 else []
+
+    if request.method == 'POST':
+        room_id = request.form.get('room_id')
+        start_time = request.form.get('start_time')
+        end_time = request.form.get('end_time')
+        purpose = request.form.get('purpose')
+        attendees_raw = request.form.get('attendees')
+        attendees = [email.strip() for email in attendees_raw.split(',')] if attendees_raw else []
+
+        updated_booking = {
+            "room_id": room_id,
+            "start_time": start_time,
+            "end_time": end_time,
+            "purpose": purpose,
+            "attendees": attendees
+        }
+        update_response = requests.put(f"{API_URL}/api/bookings/{booking_id}", json=updated_booking, headers=headers)
+        if update_response.status_code == 200:
+            flash('Booking updated successfully.')
+            return redirect(url_for('my_bookings'))
+        else:
+            flash('Failed to update booking.')
+
+    return render_template('update_booking.html', booking=booking, rooms=rooms)
+
 #if __name__ == '__main__':
  #   app.run(debug=True)
