@@ -4,6 +4,14 @@
     <title>My Bookings</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
     <style>
+         body {
+        background-image: url("{{ url_for('static', filename='styles/empty-conference-room.jpg') }}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        
+    }
         .bookings-section {
             background: rgba(0, 0, 0, 0.07);
             border-radius: 16px;
