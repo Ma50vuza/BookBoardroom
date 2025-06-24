@@ -98,3 +98,17 @@ li {
 body {
     padding-top: 0px;
 }
+.flashes {
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: center;
+}
+.flash-message {
+    background: #222;
+    color: #fff;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}

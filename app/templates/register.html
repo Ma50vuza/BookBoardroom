@@ -73,6 +73,15 @@
             <a href="{{ url_for('login') }}">Logout</a>
         </nav>
     </div>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flashes">
+      {% for message in messages %}
+        <div class="flash-message">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 </header>
 
     <div class="register-container">
@@ -85,7 +94,7 @@
             <input type="text" id="department" name="department" placeholder="Department" required>
             <button type="submit">Register</button>
         </form>
-        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('login') }}">Back to Login</a>
     </div>
 </body>
 </html>
