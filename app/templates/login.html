@@ -72,15 +72,6 @@
             <a href="{{ url_for('login') }}">Logout</a>
         </nav>
     </div>
-    {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="flashes">
-      {% for message in messages %}
-        <div class="flash-message">{{ message }}</div>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
 </header>
 
     <div class="login-container">
