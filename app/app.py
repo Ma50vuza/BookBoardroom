@@ -225,7 +225,7 @@ def myBookings():
 
     return render_template('myBookings.html', bookings=user_bookings)
 
-@app.route('/update_booking/<booking_id>', methods=['GET', 'POST'])
+@app.route('/updateBooking/<booking_id>', methods=['GET', 'POST'])
 def update_booking(booking_id):
     token = session.get('token')
     if not token:
@@ -267,7 +267,7 @@ def update_booking(booking_id):
         else:
             flash('Failed to update booking.')
 
-    return render_template('update_booking.html', booking=booking, rooms=rooms)
+    return render_template('updateBooking.html', booking=booking, rooms=rooms)
 
 #if __name__ == '__main__':
  #   app.run(debug=True)
