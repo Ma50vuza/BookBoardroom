@@ -71,21 +71,19 @@
         <h3>All Bookings</h3>
         <div class="bookings">
             {% if bookings %}
-
-    <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: center;">
-        {% for b in bookings %}
-        <div style="background:rgba(0,0,0,0.7); border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); padding:18px 22px; min-width:260px; max-width:320px;">
-            <div><strong>Room:</strong> {{ b.room or b.room_id or b.room_name }}</div>
-            <div><strong>Purpose:</strong> {{ b.purpose }}</div>
-            <div><strong>Start:</strong> {{ b.start_time }}</div>
-            <div><strong>End:</strong> {{ b.end_time }}</div>
-            <div><strong>Attendees:</strong> {{ b.attendees|join(', ') if b.attendees else '' }}</div>
-        </div>
-        {% endfor %}
-</div>
-    {% if not bookings %}
-    <p style="text-align:center;">No bookings found.</p>
-    {% endif %}
+                <ul>
+                {% for b in bookings %}
+                    <li>
+                        <strong>Purpose:</strong> {{ b.purpose }}<br>
+                        <strong>Start:</strong> {{ b.start_time }}<br>
+                        <strong>End:</strong> {{ b.end_time }}<br>
+                        <strong>Attendees:</strong> {{ b.attendees|join(', ') if b.attendees else '' }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bookings found.</p>
+            {% endif %}
         </div>
     </div>
 </body>
