@@ -220,7 +220,7 @@ def myBookings():
     bookings_response = requests.get(f"{API_URL}/api/bookings", headers=headers)
     all_bookings = bookings_response.json() if bookings_response.status_code == 200 else []
 
-    # Filter bookings for the logged-in user
+    # Filter bookings for the logged-in users
     user_bookings = [b for b in all_bookings if b.get('email') == user_email]
 
     return render_template('myBookings.html', bookings=user_bookings)
